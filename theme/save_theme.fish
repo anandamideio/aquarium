@@ -3,7 +3,7 @@
 # Save a list of variables to be set on launch
 function save_theme -d "Save a list of variables to be set on launch" -a var_key -d "The key to save the variable under" -a var_value -d "The value to save the variable as"
     # Version Number
-    set -l func_version "1.0.0"
+    set -l func_version "1.0.1"
     # Flag options
     set -l options "v/version" "h/help" "r/remove" "l/list" "e/edit"
     argparse -n installs $options -- $argv
@@ -50,9 +50,11 @@ function save_theme -d "Save a list of variables to be set on launch" -a var_key
 
     # Make sure they have an editor availabel or fall back to nano
     if not set -q EDITOR
-        # see if the `code` command is available
-        if test -q code
-            set -g EDITOR "code"
+        # If the user has defined a preferred editor, use that
+        if set -q aqua__preferred_editor
+            set -g EDITOR $aqua__preferred_editor
+        else if type -q code
+            set -g EDITOR "code -n"
         else
             set -g EDITOR "nano"
         end
