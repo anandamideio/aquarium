@@ -59,6 +59,12 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
         for file in $files
             # Get the function name
             set -l function_name (basename -s .fish $file)
+
+            # Check if the script is executable, if not make it executable
+            if not test -x $path_to_function$file
+                chmod +x $path_to_function$file
+            end
+
             # Copy the function to the fish functions directory
             cp $path_to_function$file $HOME/.config/fish/functions/$function_name.fish
             # Source the function
@@ -70,6 +76,11 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
     # Get the function name
     # Our function paths are going to look like `./.vscode/scripts/theme/install_mods_theme.fish` so we need to extract the function name
     set -l function_name (basename -s .fish $path_to_function)
+
+    # Check if the script is executable, if not make it executable
+    if not test -x $path_to_function
+        chmod +x $path_to_function
+    end
 
     # Copy the function to the fish functions directory
     cp $path_to_function $HOME/.config/fish/functions/$function_name.fish
