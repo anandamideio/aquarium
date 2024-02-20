@@ -5,7 +5,7 @@
 # Usage: cpfunc <path_to_function>
 function cpfunc -d 'Copy a function to the fish functions directory and source it' -a path_to_function -d 'The path to the function to copy'
     # Version Number
-    set -l func_version "1.1.2"
+    set -l func_version "1.1.3"
     # Flag options
     set -l options "v/version" "h/help" "d/directory"
     argparse -n installs $options -- $argv
@@ -29,8 +29,14 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
         echo
         echo "Examples:"
         echo "  cpfunc ~/path/to/function.fish"
-        echo "  cpfunc -d ~/path/to/functions/"
+        echo "  cpfunc ~/path/to/functions/ -d"
         return
+    end
+
+    # If they accidentally provided the flag first then return an error
+    if string match -q -- "-*" $path_to_function
+        echo "You must provide a path to the function or function(s) to copy, then any flags"
+        return 1
     end
 
     # If they didn't provide a path to the function then return an error

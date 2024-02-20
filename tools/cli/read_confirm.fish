@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function read_confirm --description 'Ask the user for confirmation' -a prompt
+function read_confirm -d 'Ask the user for confirmation' -a prompt
     # Version Number
     set -l func_version "1.0.0"
     # Flag options

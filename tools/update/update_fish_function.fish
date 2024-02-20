@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function update_fish_function -d "Update a fish function, if the provided version is newer (version number)" -a function_path -d "That path to the fish function to update"
+function update_fish_function -d 'Update a fish function, if the provided version is newer (version number)' -a function_path -d "That path to the fish function to update"
     # Version Number
     set -l func_version "1.1.0"
     # Flag options

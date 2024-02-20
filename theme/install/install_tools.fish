@@ -20,6 +20,16 @@ for func in $aqua__base_funcs
 end
 
 ## Now we use the cpfunc -d to copy all our aqua functions to the fish functions directory
-cpfunc -d $AQUA__CLI_DIR
-cpfunc -d $AQUA__FUNC_DIR
-cpfunc -d $AQUA__UPDATE_DIR
+cpfunc $AQUA__CLI_DIR -d
+cpfunc $AQUA__FUNC_DIR -d
+cpfunc $AQUA__UPDATE_DIR -d
+
+## Now we also need to move them into $AQUARIUM_INSTALL_DIR/tools
+mkdir -p "$AQUARIUM_INSTALL_DIR/tools/cli"
+cp -r $AQUA__CLI_DIR "$AQUARIUM_INSTALL_DIR/tools/cli"
+
+mkdir -p "$AQUARIUM_INSTALL_DIR/tools/functions"
+cp -r $AQUA__FUNC_DIR "$AQUARIUM_INSTALL_DIR/tools/functions"
+
+mkdir -p "$AQUARIUM_INSTALL_DIR/tools/update"
+cp -r $AQUA__UPDATE_DIR "$AQUARIUM_INSTALL_DIR/tools/update"

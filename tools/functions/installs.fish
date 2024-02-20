@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # Install (multiple) software if missing from system
-function installs -d "Install (multiple pieces of) software if missing from system, without prompting for confirmation"
+function installs -d 'Install (multiple pieces of) software if missing from system, without prompting the user for confirmation'
     # Version Number
     set -l func_version "1.0.1"
     # Flag options

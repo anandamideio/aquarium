@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function backup_and_edit -d 'Backup a file (make a copy with .backup) and open the original in your preferred editor' -a file -d 'The file to edit' -a max_copies -d 'The maximum number of copies to keep'
+function backup_and_edit -d 'Backup a file (make a copy with .bak) and open the original in your preferred editor' -a file -d 'The file to edit' -a max_copies -d 'The maximum number of copies to keep'
     # Version Number
     set -l func_version "1.1.0"
     # Flag options

@@ -1,7 +1,6 @@
 #!/usr/bin/env fish
 
-# This is an alias for `ls -p $argv[0] | grep -v /`
-function lsf --description 'List files in a directory without the directories' -a dir -d "Directory to list files from"
+function lsf -d 'List files in a directory without the directories' -a dir -d "Directory to list files from"
     # Version Number
     set -l func_version "1.0.0"
     # Flag options

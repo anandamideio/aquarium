@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function update_git_alias -d "Update a Git alias, if the definition has changed, otherwise do nothing" -a git_alias -d "The name of the Git alias to update" -a new_alias_definition -d "The new definition of the Git alias"
+function update_git_alias -d 'Update a Git alias, if the definition has changed, otherwise do nothing' -a git_alias -d "The name of the Git alias to update" -a new_alias_definition -d "The new definition of the Git alias"
     # Version Number
     set -l func_version "1.0.2"
     # Flag options

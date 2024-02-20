@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # Function to center text within a given width
-function print_center -a width
+function print_center -d 'Print a message centered in terminal' -a width
     # Version Number
     set -l func_version "1.0.0"
     # Flag options

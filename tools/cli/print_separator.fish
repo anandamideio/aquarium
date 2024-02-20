@@ -1,7 +1,7 @@
 #!/usr/bin/env fish
 
 # Print a seperator with a centered message in the middle
-function print_separator
+function print_separator -d 'Print a separator with a centered message in the middle'
     # Version Number
     set -l func_version "1.0.0"
     # Flag options
