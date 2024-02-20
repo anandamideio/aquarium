@@ -79,7 +79,6 @@ else
     end
 end
 
-
 # Now we can install timg on their system from source
 if not type -q timg
     print_separator "🖼️ Installing timg 🖼️"
@@ -239,7 +238,7 @@ if not test -f ~/.config/aquarium_installed
         set -l GREEN__ (set_color green)
         set -l RESET__ (set_color normal)
         # Set out new custom greeting since we now load asynchronously
-        set -U fish_greeting "Welcome to $CYAN__Aquarium$RESET__, please wait a second while I throw some fishes into the water..\nType $YELLOW__help$RESET__ for instructions on how to use fish, or $GREEN__aquarium --list$RESET__ to list your aquarium functions"
+        set -U fish_greeting "Welcome to " $CYAN__ "Aquarium" $RESET__, please wait a second while I throw some fishes into the water..\nType $YELLOW__help$RESET__ for instructions on how to use fish, or $GREEN__aquarium --list$RESET__ to list your aquarium functions"
         # Install our custom simple_git tide_item
         cpfunc ./.vscode/scripts/theme/_tide_item_simple_git.fish
 
