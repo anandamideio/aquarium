@@ -47,15 +47,45 @@ if not type -q glow
   sudo apt update
 end
 
-# Install any missing ubuntu software, setting up shortcuts, virtuals, and PATHs
-print_separator "🔍 Checking for missing software, installing if needed 🔍"
-installs bat fd-find chafa jq glow neofetch
+set aqua__base_dependencies bat chafa jq glow neofetch
+set aqua__missing_dependencies
+for package in $aqua__base_dependencies
+  if not type -q $package
+    set -a aqua__missing_dependencies $package
+  end
+end
+
+if not test -z $aqua__missing_dependencies
+  print_separator "🔍 Installing missing dependencies 🔍"
+  installs $aqua__missing_dependencies
+end
+
+if not type -q fd
+  print_separator "🔍 Installing fd-find 🔍"
+  installs fd-find
+end
 
 # Check if fzf is installed
 if not type -q fzf
   print_separator "🔍 Installing fzf 🔍"
   git clone --depth  1 https://github.com/junegunn/fzf.git ~/.cache/fzf
   yes | ~/.cache/fzf/install
+
+  # Add an update alias to fish
+  alias update_fzf="aqua__update_fzf"
+  funcsave update_fzf
+
+  # Now we need to see if the default fzf_key_bindings function symlink got added to our fish functions folder, and if so, unlink it
+  if test -L ~/.config/fish/functions/fzf_key_bindings.fish
+    unlink ~/.config/fish/functions/fzf_key_bindings.fish
+  end
+
+  set -l fzf_key_bindings_file $AQUARIUM_INSTALL_DIR/theme/fzf/fzf_key_bindings.fish
+
+  # And instead lets just run our key bindings function
+  fish -c $fzf_key_bindings_file
+
+  alias update_fzf="aqua__update_fzf"
 else
   # Get the installed version of fzf
   set -l fzf_version (fzf --version | string split ' ')[1]
@@ -63,16 +93,7 @@ else
   # Compare the version with "0.46.1"
   if not string match -q '*0.46.1*' $fzf_version
     print_separator "🔍 Updating fzf 🔍"
-    # Check if it was installed in cache and if so pull and rebuild
-    if test -d ~/.cache/fzf
-      cd ~/.cache/fzf
-      git pull
-      yes | ~/.cache/fzf/install
-    else 
-      # If it wasn't installed in cache, install it in cache
-      git clone --depth  1 https://github.com/junegunn/fzf.git ~/.cache/fzf
-      yes | ~/.cache/fzf/install
-    end
+    aqua__update_fzf
   end
 end
 

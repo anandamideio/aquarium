@@ -33,7 +33,7 @@ function save_theme -d "Save a list of variables to be set on launch" -a var_key
 
     # Theme file
     if not set -q $AQUA__CONFIG_FILE
-        set -ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
+        set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
     end
 
     # If the file doesn't exist, exit

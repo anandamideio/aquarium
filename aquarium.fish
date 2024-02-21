@@ -74,6 +74,14 @@ function aquarium -d 'Plunge into the waters'
         for update in $update_fishies
             echo "" • $update -- (set_color blue)(fndesc $AQUA__UPDATE_DIR/$update)(set_color normal)
         end
+        echo ""
+
+        # Alias and courtesy functions
+        echo (set_color cyan)"Aliases:"(set_color normal)
+        echo "" • aquarium -- (set_color blue)"Plunge into the waters"(set_color normal)
+        echo "" • update_fzf -- (set_color blue)"Update fzf"(set_color normal)
+        echo "" • git visual_checkout -- (set_color blue)"Choose your git branch in a nice terminal GUI"(set_color normal)
+        echo "" • git gone -- (set_color blue)"Remove all the local branches that are no longer on the remote"(set_color normal)
     end
 end
 
