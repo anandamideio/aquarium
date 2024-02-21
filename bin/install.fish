@@ -20,7 +20,7 @@ set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
 
 # Run the scripts
-printf "Installing "(set_color -b blue)"Aquarium"(set_color normal)"\n"
+printf (set_color -b blue)" Installing Aquarium "(set_color normal)"\n"
 fish -c $AQUA__INSTALL_TOOLS_SCRIPT
 fish -c $AQUA__INSTALL_DEPENDENCIES_SCRIPT
 fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
@@ -33,8 +33,10 @@ if not read_confirm "The file $AQUA__CONFIG_FILE already exists. Do you want to 
   exit 1
 end
 
+# Create the aquarium directory
+mkdir -p (dirname $AQUARIUM_INSTALL_DIR)
 # Create the config file
-mkdir -p (dirname $AQUA__CONFIG_FILE)
+touch $AQUA__CONFIG_FILE
 
 ## The file should start as follows:
 # # This file is used to store the theme that the user has chosen

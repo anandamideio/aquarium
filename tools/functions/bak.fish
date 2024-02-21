@@ -1,6 +1,6 @@
 function bak -d 'Backup a file (make a copy with .bak extension)' -a file -d "File to backup" -a max_copies -d "Maximum number of copies to keep"
   # Version Number
-  set -l func_version "1.0.0"
+  set -l func_version "1.0.1"
   # Flag options
   set -l options "v/version" "h/help" "V/verbose" "n/dry-run"
   argparse -n installs $options -- $argv
@@ -84,12 +84,12 @@ function bak -d 'Backup a file (make a copy with .bak extension)' -a file -d "Fi
       # If there is a backup with a number, the number should be incremented and a new `.bak` should be created
       if test -e $file.1.bak
         print_verbose "There is a backup of "(set_color green)$file(set_color normal)" called "(set_color green)$file.1.bak(set_color normal)", let's see how many backups there are"
-        for i in (seq $MAX -1  1)
+        for i in (seq $max_copies -1  1)
           if test -e $file.$i.bak
             print_verbose "There is a backup of "(set_color green)$file(set_color normal)" called "(set_color green)$file.$i.bak(set_color normal)", let's see if we are at max"
             # If we are at max, we need to delete the oldest
-            if test $i -eq $MAX
-              print_verbose "There are already "(set_color green)$MAX(set_color normal)" backups, let's delete the oldest one"
+            if test $i -eq $max_copies
+              print_verbose "There are already "(set_color green)$max_copies(set_color normal)" backups, let's delete the oldest one"
               rm $file.$i.bak
               print_verbose "Deleted "(set_color green)$file.$i.bak(set_color normal)"\n"
               break
