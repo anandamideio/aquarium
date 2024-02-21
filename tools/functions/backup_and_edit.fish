@@ -2,7 +2,7 @@
 
 function backup_and_edit -d 'Backup a file (make a copy with .bak) and open the original in your preferred editor' -a file -d 'The file to edit' -a max_copies -d 'The maximum number of copies to keep'
     # Version Number
-    set -l func_version "1.1.0"
+    set -l func_version "1.2.0"
     # Flag options
     set -l options "v/version" "h/help" "b/backup" "V/verbose"
     argparse -n installs $options -- $argv
@@ -32,7 +32,7 @@ function backup_and_edit -d 'Backup a file (make a copy with .bak) and open the 
         if set -q aqua__preferred_editor
             set -g EDITOR $aqua__preferred_editor
         else if type -q code
-            set -g EDITOR "code -n"
+            set -g EDITOR "code"
         else
             set -g EDITOR "nano"
         end
