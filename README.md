@@ -9,4 +9,4 @@ A more configurable, extensible, fish shell theme with extra functions baked in
 - [fish](https://fishshell.com/) >= 3.0.0
 
 ## Installation
- - `git clone --depth 1 https://github.com/anandamideio/aquarium.git ~/.cache/aquarium && ./~/.cache/aquarium/install.fish`
+ - `rm -r ~/.cache/aquarium && git clone --depth 1 https://github.com/anandamideio/aquarium.git ~/.cache/aquarium && cd ~/.cache/aquarium  && ./bin/install.fish `
