@@ -16,6 +16,7 @@ set AQUA__INSTALL_FISH_ALIAS_SCRIPT "$AQUA__THEME_DIR/install/install_fish_alias
 set AQUA__INSTALL_GIT_ALIAS_SCRIPT "$AQUA__THEME_DIR/install/install_git_alias.fish"
 set AQUA__UNINSTALL_OMF_SCRIPT "$AQUA__THEME_DIR/ohmyfish/uninstall_omf.fish"
 set AQUA__INSTALL_VSCODE_SETTINGS_SCRIPT "$AQUA__THEME_DIR/install/install_vscode_settings.fish"
+set AQUA__INSTALL_NODE_SCRIPT "$AQUA__THEME_DIR/install/install_node.fish"
 set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 
 # Files
@@ -32,6 +33,7 @@ fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
 fish -c $AQUA__INSTALL_GIT_ALIAS_SCRIPT
 fish -c $AQUA__UNINSTALL_OMF_SCRIPT
 fish -c $AQUA__INSTALL_VSCODE_SETTINGS_SCRIPT
+fish -c $AQUA__INSTALL_NODE_SCRIPT
 fish -c $PATCH_FISH_GREETING_SCRIPT
 
 # Install Tide

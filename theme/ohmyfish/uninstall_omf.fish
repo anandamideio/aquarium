@@ -1,7 +1,9 @@
 #!/usr/bin/env fish
 
 # Directories
-set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
+if test -z "$AQUARIUM_INSTALL_DIR"
+  set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
+end
 
 # This script is used to uninstall oh-my-fish if it is installed
 # Test if OMF_PATH is set and if omf is installed
