@@ -20,7 +20,7 @@ function aquarium -d 'Plunge into the waters'
     set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
 
     # Settings
-    set -Ux AQUARIUM_VERSION "0.1.0"
+    set -Ux AQUARIUM_VERSION "0.2.0"
     set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
 
     # Flags
