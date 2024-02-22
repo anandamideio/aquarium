@@ -16,12 +16,14 @@ function aquarium -d 'Plunge into the waters'
     set AQUA__INSTALL_GIT_ALIAS_SCRIPT "$AQUA__THEME_DIR/install/install_git_alias.fish"
     set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 
+    # Settings
+    set -Ux AQUARIUM_VERSION "0.2.1"
+    set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
+    set -Ux AQUARIUM_GIT_URL "https://github.com/anandamideio/aquarium.git"
+    set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
+
     # Files
     set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
-
-    # Settings
-    set -Ux AQUARIUM_VERSION "0.2.0"
-    set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
 
     # Flags
     set -l options "v/version" "h/help" "u/update" "l/list" "e/edit"
@@ -80,6 +82,7 @@ function aquarium -d 'Plunge into the waters'
         echo (set_color cyan)"Aliases:"(set_color normal)
         echo "" • aquarium -- (set_color blue)"Plunge into the waters"(set_color normal)
         echo "" • update_fzf -- (set_color blue)"Update fzf"(set_color normal)
+        echo "" • whatami -- (set_color blue)"Show the current computer info"(set_color normal)
         echo "" • git visual_checkout -- (set_color blue)"Choose your git branch in a nice terminal GUI"(set_color normal)
         echo "" • git gone -- (set_color blue)"Remove all the local branches that are no longer on the remote"(set_color normal)
     end
