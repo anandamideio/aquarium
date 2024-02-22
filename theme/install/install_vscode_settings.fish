@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 
 if type -q code
+  set -Ux EDITOR "code"
   set -l current_os (uname -s)
   set -l trueOS
   set -U vscodeSettingsPath
@@ -26,7 +27,7 @@ if type -q code
     set trueOS "MacOS"
   end
 
-  printf "You are running VSCODE from $trueOS\n"
+  printf "You are running VSCode from $trueOS\n"
   printf ""
 
   # If we still can't find the vscode settings file then we can't do anything
