@@ -17,7 +17,7 @@ function aquarium -d 'List your fishies, update your aquarium, and more'
     set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 
     # Settings
-    set -gx AQUARIUM_VERSION "0.2.3"
+    set -gx AQUARIUM_VERSION "0.3.3"
     set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
     set -Ux AQUARIUM_GIT_URL "https://github.com/anandamideio/aquarium.git"
     set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
@@ -93,8 +93,23 @@ function aquarium -d 'List your fishies, update your aquarium, and more'
     if set -q _flag_update
         print_separator " Cleaning and refilling your aquarium... "
         pushd $AQUARIUM_INSTALL_DIR
+        # Make a temporary dir in the cache folder to house the `bak` folder and the user theme
+        set -l tmp_dir (mktemp -d)
+        # Back up the user theme file to a different location
+        cp $AQUA__CONFIG_FILE $tmp_dir/user_theme.fish
+        # IF the bak folder exist in the aquarium directory, move it to the temp dir
+        if test -d $AQUARIUM_INSTALL_DIR/bak
+            mv $AQUARIUM_INSTALL_DIR/bak $tmp_dir
+        end
+
         git pull
+
         ./bin/update.fish
+
+        # Move the bak folder back to the aquarium directory
+        mv $tmp_dir/bak $AQUARIUM_INSTALL_DIR
+        # Move the user theme file back to the aquarium directory
+        mv $tmp_dir/user_theme.fish $AQUA__CONFIG_FILE
         popd
         echo "Aquarium updated to" (set_color blue)($AQUARIUM_VERSION)(set_color normal)
         return
