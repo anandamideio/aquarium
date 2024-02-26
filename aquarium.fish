@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
 
-function aquarium -d 'Plunge into the waters'
+function aquarium -d 'List your fishies, update your aquarium, and more'
     # Directories
     set AQUA__PWD (pwd)
     set AQUA__THEME_DIR "$AQUA__PWD/theme"
@@ -17,7 +17,7 @@ function aquarium -d 'Plunge into the waters'
     set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 
     # Settings
-    set -Ux AQUARIUM_VERSION "0.2.1"
+    set -gx AQUARIUM_VERSION "0.2.3"
     set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
     set -Ux AQUARIUM_GIT_URL "https://github.com/anandamideio/aquarium.git"
     set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
@@ -85,6 +85,19 @@ function aquarium -d 'Plunge into the waters'
         echo "" • whatami -- (set_color blue)"Show the current computer info"(set_color normal)
         echo "" • git visual_checkout -- (set_color blue)"Choose your git branch in a nice terminal GUI"(set_color normal)
         echo "" • git gone -- (set_color blue)"Remove all the local branches that are no longer on the remote"(set_color normal)
+
+        return
+    end
+
+    # If they asked to update aquarium, first check what the most recent version is
+    if set -q _flag_update
+        print_separator " Cleaning and refilling your aquarium... "
+        pushd $AQUARIUM_INSTALL_DIR
+        git pull
+        ./bin/update.fish
+        popd
+        echo "Aquarium updated to" (set_color blue)($AQUARIUM_VERSION)(set_color normal)
+        return
     end
 end
 

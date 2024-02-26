@@ -2,7 +2,7 @@
 
 # Check if the $AQUARIUM_INSTALL_DIR is set
 if test -z "$AQUARIUM_INSTALL_DIR"
-  set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
+  set -gx AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
 end
 
 ## Check if we have any of the files that mark us needing 

@@ -22,8 +22,16 @@ set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 # Files
 set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
 
+# Copy the most recent version of the aquarium repo to the aquarium directory
+if not test -d $AQUARIUM_INSTALL_DIR
 # Create the aquarium directory
-mkdir -p (dirname $AQUARIUM_INSTALL_DIR)
+  mkdir -p (dirname $AQUARIUM_INSTALL_DIR)
+  git clone git clone --depth 1 https://github.com/anandamideio/aquarium.git $AQUARIUM_INSTALL_DIR
+else
+  pushd $AQUARIUM_INSTALL_DIR
+  git pull
+  popd
+end
 
 # Run the scripts
 print_separator (set_color -b blue)" Installing Aquarium "(set_color normal)

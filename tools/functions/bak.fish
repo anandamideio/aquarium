@@ -1,6 +1,6 @@
 function bak -d 'Backup a file (make a copy with .bak extension)' -a file -d "File to backup" -a max_copies -d "Maximum number of copies to keep"
   # Version Number
-  set -l func_version "1.0.1"
+  set -l func_version "1.0.2"
   # Flag options
   set -l options "v/version" "h/help" "V/verbose" "n/dry-run"
   argparse -n installs $options -- $argv
@@ -8,7 +8,7 @@ function bak -d 'Backup a file (make a copy with .bak extension)' -a file -d "Fi
   # if they asked the version just return it
   if set -q _flag_version
     echo $func_version
-    return
+    exit 0
   end
 
   # if they asked for help, show it
@@ -21,7 +21,7 @@ function bak -d 'Backup a file (make a copy with .bak extension)' -a file -d "Fi
     echo "  -h, --help     Show this help"
     echo "  -V, --verbose  Show verbose output"
     echo "  -n, --dry-run  Show what would be done, but don't actually do it"
-    return
+    exit 0
   end
 
   function print_verbose -a message
