@@ -26,7 +26,7 @@ set -Ux AQUA__CONFIG_FILE "$AQUARIUM_INSTALL_DIR/user_theme.fish"
 if not test -d $AQUARIUM_INSTALL_DIR
 # Create the aquarium directory
   mkdir -p (dirname $AQUARIUM_INSTALL_DIR)
-  git clone git clone --depth 1 https://github.com/anandamideio/aquarium.git $AQUARIUM_INSTALL_DIR
+  git clone --depth 1 https://github.com/anandamideio/aquarium.git $AQUARIUM_INSTALL_DIR
 else
   pushd $AQUARIUM_INSTALL_DIR
   git pull
