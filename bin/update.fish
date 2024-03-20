@@ -43,11 +43,18 @@ print_separator (set_color -b blue)" Updating Aquarium "(set_color normal)
 fish -c $AQUA__INSTALL_TOOLS_SCRIPT
 
 # Re-reun the install dependencies script, in case their are new dependencies
-print_separator (set_color -b blue)" Installing Dependencies "(set_color normal)
+print_separator (set_color -b blue)" Updating Dependencies "(set_color normal)
 fish -c $AQUA__INSTALL_DEPENDENCIES_SCRIPT
 
-# Update fzf and rebind our keybindings
+# Re-run the install fish alias script, in case their are new aliases
+print_separator (set_color -b blue)" Updating Fish Aliases "(set_color normal)
+fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
+
+# Update fzf 
 aqua__update_fzf
+
+# Rebind our keybindings
+fzf_key_bindings
 
 # Finished updating
 print_separator (set_color -b blue)" Finished Updating Aquarium "(set_color normal)

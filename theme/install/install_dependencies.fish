@@ -47,17 +47,12 @@ if not type -q glow
   sudo apt update
 end
 
-set aqua__base_dependencies build-essential procps curl file git bat chafa jq glow neofetch
-set aqua__missing_dependencies
+# Grab more useful tools
+set aqua__base_dependencies bat chafa jq glow neofetch build-essential procps curl git
 for package in $aqua__base_dependencies
   if not type -q $package
-    set -a aqua__missing_dependencies $package
+    installs $package
   end
-end
-
-if not test -z $aqua__missing_dependencies
-  print_separator "🔍 Installing missing dependencies 🔍"
-  installs $aqua__missing_dependencies
 end
 
 if not type -q fd
@@ -122,23 +117,60 @@ if not type -q brew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Add the brew command to our path
-  fish -c 'set da_home (getent passwd (whoami) | cut -d: -f6); echo; echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> $da_home/.config/fish/config.fish'; and \
+  fish -c 'set da_home (getent passwd (whoami) | cut -d: -f6); echo; echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> $da_home/.config/fish/config.fish';
   eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 end
 
 # Now we can install the missing brew packages
 set aqua__brew_dependencies watchman lsd fx
-set aqua__missing_brew_dependencies
 for package in $aqua__brew_dependencies
   if not type -q $package
-    set -a aqua__missing_brew_dependencies $package
+    brew install $package
   end
 end
 
-if not test -z $aqua__missing_brew_dependencies
-  print_separator "🍺 Installing missing brew dependencies 🍺"
+# Make sure we have tmux conf to edit
+if not test -f ~/.tmux.conf
+  print_separator "🖥️ Adding tmux settings 🖥️"
+  touch ~/.tmux.conf
+  
+  # Install our fisher tmux plugin
+  fisher install budimanjojo/tmux.fish;
 
-  for package in $aqua__missing_brew_dependencies
-    brew install $package
-  end
+  set -gx fish_tmux_default_session_name frog_in_a_tux
+  set -gx fish_tmux_unicode yes
+  set -gx EDITOR code
+  set -gx COLORTERM truecolor
+  set -gx LANG en_US.UTF-8
+  set -gx LC_ALL en_US.UTF-8
+end
+
+# If the tmux conf file is empty, add some basic settings
+if test -s ~/.tmux.conf
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm;
+  set -gx HOMEBREW_INSTALL_BADGE ⚗️;
+  echo -e "
+  # Set the prefix to C-Space
+  unbind C-b
+  set -g prefix C-Space
+  bind C-Space send-prefix\n
+  # Unlock all color 
+  set -g default-terminal \"screen-256color\"\n
+  # Bind `n` to create a new window with the same path as the current pane
+  bind c new-window -c \"#{pane_current_path}\"\n
+  # Bind `space` twice to switch to the last window
+  bind Space last-window\n
+  # Remember more history
+  set -g history-limit 10000\n
+  # Set the window title to the current command
+  set -g set-titles on\n
+  # Reorder windows when one is closed
+  set -g renumber-windows on\n
+  # Enable mouse support
+  set -g mouse on\n
+  # List of plugins
+  set -g @plugin 'tmux-plugins/tpm'
+  set -g @plugin 'tmux-plugins/tmux-sensible'\n
+  # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+  run '~/.tmux/plugins/tpm/tpm'" >> ~/.tmux.conf
 end
