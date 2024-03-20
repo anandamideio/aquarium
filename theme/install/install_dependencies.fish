@@ -47,7 +47,7 @@ if not type -q glow
   sudo apt update
 end
 
-set aqua__base_dependencies bat chafa jq glow neofetch
+set aqua__base_dependencies build-essential procps curl file git bat chafa jq glow neofetch
 set aqua__missing_dependencies
 for package in $aqua__base_dependencies
   if not type -q $package
@@ -114,4 +114,31 @@ if not type -q timg
   # Create a fish alias so we can use it as just timg instead timg.AppImage
   alias timg="~/.cache/timg/timg.AppImage"
   funcsave timg
+end
+
+# Now we need to install homebrew if it's not installed
+if not type -q brew
+  print_separator "🍺 Installing Homebrew 🍺"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # Add the brew command to our path
+  fish -c 'set da_home (getent passwd (whoami) | cut -d: -f6); echo; echo "eval \"\$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"" >> $da_home/.config/fish/config.fish'; and \
+  eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+end
+
+# Now we can install the missing brew packages
+set aqua__brew_dependencies watchman lsd fx
+set aqua__missing_brew_dependencies
+for package in $aqua__brew_dependencies
+  if not type -q $package
+    set -a aqua__missing_brew_dependencies $package
+  end
+end
+
+if not test -z $aqua__missing_brew_dependencies
+  print_separator "🍺 Installing missing brew dependencies 🍺"
+
+  for package in $aqua__missing_brew_dependencies
+    brew install $package
+  end
 end

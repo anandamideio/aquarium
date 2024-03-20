@@ -42,6 +42,10 @@ fish -c "fisher update"
 print_separator (set_color -b blue)" Updating Aquarium "(set_color normal)
 fish -c $AQUA__INSTALL_TOOLS_SCRIPT
 
+# Re-reun the install dependencies script, in case their are new dependencies
+print_separator (set_color -b blue)" Installing Dependencies "(set_color normal)
+fish -c $AQUA__INSTALL_DEPENDENCIES_SCRIPT
+
 # Update fzf and rebind our keybindings
 aqua__update_fzf
 
