@@ -122,7 +122,7 @@ function aquarium -d 'List your fishies, update your aquarium, and more'
         # Move the user theme file back to the aquarium directory
         mv $tmp_dir/user_theme.fish $AQUA__CONFIG_FILE
         popd
-        echo "Aquarium updated to" (set_color blue)($AQUARIUM_VERSION)(set_color normal)
+        echo "Aquarium updated to" (set_color blue)("$AQUARIUM_VERSION")(set_color normal)
         return
     end
 end
