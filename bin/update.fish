@@ -38,6 +38,10 @@ sudo apt -y update; and sudo apt -y upgrade
 print_separator "🆙 Updating Fisher 🆙"
 fish -c "fisher update"
 
+# Re-run the install fish alias script, in case their are new aliases
+print_separator (set_color -b blue)" Updating Fish Aliases "(set_color normal)
+fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
+
 # Run the scripts
 print_separator (set_color -b blue)" Updating Aquarium "(set_color normal)
 fish -c $AQUA__INSTALL_TOOLS_SCRIPT
@@ -45,10 +49,6 @@ fish -c $AQUA__INSTALL_TOOLS_SCRIPT
 # Re-reun the install dependencies script, in case their are new dependencies
 print_separator (set_color -b blue)" Updating Dependencies "(set_color normal)
 fish -c $AQUA__INSTALL_DEPENDENCIES_SCRIPT
-
-# Re-run the install fish alias script, in case their are new aliases
-print_separator (set_color -b blue)" Updating Fish Aliases "(set_color normal)
-fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
 
 # Update fzf 
 aqua__update_fzf

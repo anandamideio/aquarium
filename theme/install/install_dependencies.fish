@@ -84,9 +84,11 @@ if not type -q fzf
 else
   # Get the installed version of fzf
   set -l fzf_version (fzf --version | string split ' ')[1]
+  # Get the lastest version number from git
+  set -l fzf_latest_version (curl -s https://api.github.com/repos/junegunn/fzf/tags | jq -r '.[0].name')
 
-  # Compare the version with "0.46.1"
-  if not string match -q '*0.46.1*' $fzf_version
+  # If they don't match, update fzf
+  if not test $fzf_version = $fzf_latest_version
     print_separator "🔍 Updating fzf 🔍"
     aqua__update_fzf
   end
@@ -133,22 +135,23 @@ end
 if not test -f ~/.tmux.conf
   print_separator "🖥️ Adding tmux settings 🖥️"
   touch ~/.tmux.conf
-  
+end
+
+# If the tmux conf file is empty, add some basic settings
+if count < ~/.tmux.conf -eq 0
   # Install our fisher tmux plugin
   fisher install budimanjojo/tmux.fish;
 
+  set -gx HOMEBREW_INSTALL_BADGE ⚗️;
   set -gx fish_tmux_default_session_name frog_in_a_tux
   set -gx fish_tmux_unicode yes
   set -gx EDITOR code
   set -gx COLORTERM truecolor
   set -gx LANG en_US.UTF-8
   set -gx LC_ALL en_US.UTF-8
-end
 
-# If the tmux conf file is empty, add some basic settings
-if test -s ~/.tmux.conf
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm;
-  set -gx HOMEBREW_INSTALL_BADGE ⚗️;
+
   echo -e "
   # Set the prefix to C-Space
   unbind C-b

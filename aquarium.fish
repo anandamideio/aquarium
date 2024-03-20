@@ -17,7 +17,7 @@ function aquarium -d 'List your fishies, update your aquarium, and more'
     set PATCH_FISH_GREETING_SCRIPT "$AQUA__THEME_DIR/install/patch_greeting.fish"
 
     # Settings
-    set -gx AQUARIUM_VERSION "0.3.3"
+    set -Ux AQUARIUM_VERSION "0.5.0"
     set -Ux AQUARIUM_URL "https://github.com/anandamideio/aquarium"
     set -Ux AQUARIUM_GIT_URL "https://github.com/anandamideio/aquarium.git"
     set -Ux AQUARIUM_INSTALL_DIR "$HOME/.aquarium"
@@ -91,6 +91,17 @@ function aquarium -d 'List your fishies, update your aquarium, and more'
 
     # If they asked to update aquarium, first check what the most recent version is
     if set -q _flag_update
+        # Read the version numberin the repo from `https://raw.githubusercontent.com/anandamideio/aquarium/main/VERSION.md`
+        set -l latest_version (curl -s https://raw.githubusercontent.com/anandamideio/aquarium/main/VERSION.md)
+        # If the version number is the same as the installed version, tell the user and return
+        if test $latest_version = $AQUARIUM_VERSION
+            print_separator "Aquarium is already up to date"
+            return
+        end
+
+        # Update our universal aquarium version number
+        set -Ux AQUARIUM_VERSION $latest_version
+
         print_separator " Cleaning and refilling your aquarium... "
         pushd $AQUARIUM_INSTALL_DIR
         # Make a temporary dir in the cache folder to house the `bak` folder and the user theme

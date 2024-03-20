@@ -16,6 +16,12 @@ if functions -q ll
   functions --erase lla
 end
 
+## If for some reason the `ls alias still exist, kill it`
+if functions -q ls
+  print_separator "📂 Removing ls alias 📂"
+  functions --erase ls
+end
+
 # We replaced exa with lsd
 # If we don't have our lsd aliases yet lets add them
 if not functions -q ll
