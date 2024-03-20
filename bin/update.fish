@@ -32,7 +32,7 @@ end
 
 # Update the system so our dependencies are up to date
 print_separator "🆙 Updating your system 🆙"
-sudo apt -y update && sudo apt -y upgrade
+sudo apt -y update; and sudo apt -y upgrade
 
 # Update Fisher
 print_separator "🆙 Updating Fisher 🆙"
@@ -53,8 +53,10 @@ fish -c $AQUA__INSTALL_FISH_ALIAS_SCRIPT
 # Update fzf 
 aqua__update_fzf
 
-# Rebind our keybindings
-fzf_key_bindings
+# Resource the users preferred theme from the aquarium directory
+source $AQUA__CONFIG_FILE
 
 # Finished updating
 print_separator (set_color -b blue)" Finished Updating Aquarium "(set_color normal)
+
+

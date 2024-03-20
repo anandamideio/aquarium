@@ -42,4 +42,6 @@ function aqua__update_fzf -d 'Update fzf, and install our key bindings'
 
   # And instead lets just run our key bindings function
   fzf_key_bindings
+
+  print_separator "FZF Updated and Key Bindings Rebound"
 end

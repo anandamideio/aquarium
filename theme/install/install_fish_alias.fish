@@ -18,18 +18,16 @@ end
 
 # We replaced exa with lsd
 # If we don't have our lsd aliases yet lets add them
-if not functions -q lt
+if not functions -q ll
   print_separator "📂 Adding some color to our directories (lsd) 📂"
-  alias ls="lsd"
-  funcsave ls
 
-  alias la='ls -a'
+  alias la='lsd -a'
   funcsave la
 
-  alias lla='ls -la'
+  alias lla='lsd -la'
   funcsave lla
 
-  alias lt='ls --tree'
+  alias lt='lsd --tree'
   funcsave lt
 
   alias ll="lsd -l"
