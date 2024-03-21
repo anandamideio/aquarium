@@ -5,9 +5,9 @@
 # Usage: cpfunc <path_to_function>
 function cpfunc -d 'Copy a function to the fish functions directory and source it' -a path_to_function -d 'The path to the function to copy'
     # Version Number
-    set -l func_version "1.1.3"
+    set -l func_version "1.2.1"
     # Flag options
-    set -l options "v/version" "h/help" "d/directory"
+    set -l options "v/version" "h/help" "d/directory" "g/global"
     argparse -n installs $options -- $argv
 
     # if they asked the version just return it
@@ -26,10 +26,12 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
         echo "  -v, --version  Show the version number"
         echo "  -h, --help     Show this help message"
         echo "  -d, --directory  The directory to copy the function to"
+        echo "  -g, --global  Install the function globally"
         echo
         echo "Examples:"
         echo "  cpfunc ~/path/to/function.fish"
         echo "  cpfunc ~/path/to/functions/ -d"
+        echo "  cpfunc ~/path/to/functions/ -d -g"
         return
     end
 
@@ -71,10 +73,19 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
                 chmod +x $path_to_function$file
             end
 
-            # Copy the function to the fish functions directory
-            cp $path_to_function$file $HOME/.config/fish/functions/$function_name.fish
-            # Source the function
-            source $HOME/.config/fish/functions/$function_name.fish
+            # If the want to install it globally then copy it to the global fish functions directory
+            if set -q _flag_g
+                # Copy the function to the fish functions directory
+                sudo cp $path_to_function$file /etc/fish/functions/
+                # Source the function
+                source /etc/fish/functions/$function_name.fish
+                continue
+            else
+                # Copy the function to the fish functions directory
+                cp $path_to_function$file $HOME/.config/fish/functions/$function_name.fish
+                # Source the function
+                source $HOME/.config/fish/functions/$function_name.fish
+            end
         end
         return
     end
@@ -88,8 +99,17 @@ function cpfunc -d 'Copy a function to the fish functions directory and source i
         chmod +x $path_to_function
     end
 
-    # Copy the function to the fish functions directory
-    cp $path_to_function $HOME/.config/fish/functions/$function_name.fish
-    # Source the function
-    source $HOME/.config/fish/functions/$function_name.fish
+    # If the want to install it globally then copy it to the global fish functions directory
+    if set -q _flag_g
+        # Copy the function to the fish functions directory
+        sudo cp $path_to_function /etc/fish/functions/
+        # Source the function
+        source /etc/fish/functions/$function_name.fish
+        return
+    else
+        # Copy the function to the fish functions directory
+        cp $path_to_function $HOME/.config/fish/functions/$function_name.fish
+        # Source the function
+        source $HOME/.config/fish/functions/$function_name.fish
+    end
 end
