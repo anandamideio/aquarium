@@ -3,7 +3,7 @@
 # Install (multiple) software if missing from system
 function installs -d 'Install (multiple pieces of) software (from any source) while adding them to the path, and keeping everything up to date'
     # Version Number
-    set -l func_version "1.1.1"
+    set -l func_version "1.1.2"
     # Flag options
     set -l options v/version h/help s/snap b/brew
     argparse -n installs $options -- $argv
@@ -55,10 +55,10 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
 
         # If the program is 'lolcat-c' we also need to alias it
         if test $program = lolcat-c && not set -q CAULDRON_RAINBOW
-            alias lolcat lolcat-c
+            alias lolcat="lolcat-c"
             funcsave lolcat
 
-            alias rainbow-fish lolcat-c
+            alias rainbow-fish="lolcat-c"
             funcsave rainbow-fish
 
             set -Ux CAULDRON_RAINBOW true
