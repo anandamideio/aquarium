@@ -93,7 +93,7 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
                     extra_install_steps $programToInstall
                 end
             end
-            // End current loop iteration
+            ## End current loop iteration
             continue
         else if set -q _flag_brew
             # Test if already installed
