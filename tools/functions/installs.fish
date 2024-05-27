@@ -2,11 +2,15 @@
 
 # Install (multiple) software if missing from system
 function installs -d 'Install (multiple pieces of) software (from any source) while adding them to the path, and keeping everything up to date'
-    # Version Number
-    set -l func_version "1.1.2"
+    set -l func_version "1.1.5"
+
     # Flag options
-    set -l options v/version h/help s/snap b/brew
-    argparse -n installs $options -- $argv
+    set -l options (fish_opt -s v -l version)
+    set options $options (fish_opt -s h -l help)
+    set options $options (fish_opt -s s -l snap)
+    set options $options (fish_opt -s b -l brew)
+    set options $options (fish_opt -s d -l dry-run)
+    argparse $options -- $argv
 
     # if they asked the version just return it
     if set -q _flag_version
@@ -23,6 +27,7 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
         echo "  -h, --help     Show this help message"
         echo "  -s, --snap     Install the program using Snap"
         echo "  -b, --brew     Install the program using Homebrew"
+        echo "  -d, --dry-run  Show what would be installed, but don't actually install it"
         echo
         echo "Install (multiple pieces of) software while adding them to the path, and keeping everything up to date"
         return
@@ -70,15 +75,15 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
     set isFirstMissing true
 
     for i in (seq (count $argv))
-        set -l programToInstall $argv[$i]
-        set -l emoji $install_emojis[$i]
+        set program $argv[$i]
+        set emoji $install_emojis[$i]
         # Create a variable that is the program name, with any potential `-` removed
         # We do this because for some stupid reason, you install `fd-find` but the command it installs is `fdfind`
-        set -l short_p_name (string replace -r -- - "" $program)
+        set short_p_name (string replace -r -- - "" $program)
 
         if set -q _flag_snap
             # Test if already installed
-            if not test -n (snap list | grep '$programToInstall|$short_p_name')
+            if not test -n (snap list | grep '$program|$short_p_name')
                 print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
 
                 if $isFirstMissing
@@ -87,17 +92,17 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
                     set isFirstMissing false
                 end
 
-                snap install $programToInstall
+                snap install $program
 
-                if test $programToInstall = lolcat-c
-                    extra_install_steps $programToInstall
+                if test $program = lolcat-c
+                    extra_install_steps $program
                 end
             end
             ## End current loop iteration
             continue
         else if set -q _flag_brew
             # Test if already installed
-            if not test -n (brew list | grep $programToInstall)
+            if not test -n (brew list | grep $program)
                 print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
 
                 if $isFirstMissing
@@ -106,12 +111,12 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
                     set isFirstMissing false
                 end
 
-                brew install $programToInstall
+                brew install $program
             end
             continue
         else
             # Test if already installed
-            if not type -q $programToInstall || not type -q $short_p_name
+            if not type -q $program || not type -q $short_p_name
                 print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
 
                 if $isFirstMissing
@@ -120,10 +125,10 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
                     set isFirstMissing false
                 end
 
-                sudo apt install -y $programToInstall
+                sudo apt install -y $program
 
-                if test $programToInstall = fd-find || test $programToInstall = bat
-                    extra_install_steps $programToInstall
+                if test $program = fd-find || test $program = bat
+                    extra_install_steps $program
                 end
             end
         end
