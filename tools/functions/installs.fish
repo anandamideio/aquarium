@@ -3,7 +3,7 @@
 # Install (multiple) software if missing from system
 function installs -d 'Install (multiple pieces of) software (from any source) while adding them to the path, and keeping everything up to date'
     # Version Number
-    set -l func_version "1.1.0"
+    set -l func_version "1.1.1"
     # Flag options
     set -l options v/version h/help s/snap b/brew
     argparse -n installs $options -- $argv
@@ -72,8 +72,6 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
     for i in (seq (count $argv))
         set -l programToInstall $argv[$i]
         set -l emoji $install_emojis[$i]
-
-        print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
         # Create a variable that is the program name, with any potential `-` removed
         # We do this because for some stupid reason, you install `fd-find` but the command it installs is `fdfind`
         set -l short_p_name (string replace -r -- - "" $program)
@@ -81,6 +79,8 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
         if set -q _flag_snap
             # Test if already installed
             if not test -n (snap list | grep '$programToInstall|$short_p_name')
+                print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
+
                 if $isFirstMissing
                     sudo apt update
                     sudo apt upgrade -y
@@ -98,6 +98,8 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
         else if set -q _flag_brew
             # Test if already installed
             if not test -n (brew list | grep $programToInstall)
+                print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
+
                 if $isFirstMissing
                     brew update
                     brew upgrade
@@ -110,6 +112,8 @@ function installs -d 'Install (multiple pieces of) software (from any source) wh
         else
             # Test if already installed
             if not type -q $programToInstall || not type -q $short_p_name
+                print_separator "$emoji  Installing $program $emoji" # The double space here is on purpose, otherwise sometimes there no space between the emoji and the message
+
                 if $isFirstMissing
                     sudo apt update
                     sudo apt upgrade -y
