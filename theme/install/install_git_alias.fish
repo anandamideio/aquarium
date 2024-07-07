@@ -4,9 +4,9 @@
 if type -q git
     # Set up some git aliases
     set visual_checkout_definition '!fish -c \'function visual-checkout
-        set selected_branch (git branch --all | string replace -r "^.*\\/" "" | fzf --preview "git show --color=always --stat {}" --preview-window="right:wrap")
+        set selected_branch (git branch --all | string replace -r "^.*\\/" "" | sort | uniq | fzf --preview "git show --color=always --stat {}" --preview-window="right:wrap")
         if test -n "$selected_branch"
-            git checkout "$selected_branch"
+            git switch "$selected_branch"
         else
             echo "No branch selected."
         end
